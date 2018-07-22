@@ -1,0 +1,11 @@
+spring.cloud.stream.bindings.input:
+  destination: foo-data-in
+spring.cloud.stream.bindings.output:
+  destination: foo-data-out
+spring.cloud.stream.kafka.streams.binder:
+  brokers: localhost
+  zkNodes: localhost
+  configuration:
+    default.key.serde: org.apache.kafka.common.serialization.Serdes$StringSerde
+    default.value.serde: org.apache.kafka.common.serialization.Serdes$StringSerde
+    commit.interval.ms: 1000

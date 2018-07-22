@@ -1,0 +1,45 @@
+== Filter current record based on the previous value
+
+Let's say you have the following use case.
+
+A stream of events is coming in and the domain object is Foo. It has a field called status.
+If the status is "active", you don't have to do anything, however if the previous status was "active" and now it becomes "pending", then you want to send that event to an output topic.
+
+
+This application demonstrates how you can achieve this using the Kafka Streams support in Spring Cloud Stream.
+
+=== Running the app:
+
+This application is intended to run from an IDE as this contains multiple Boot applications (driver for testing in addition to the main app)
+
+Make sure that you have Kafka running (The app expects to run on default ports on localhost. If that is not the case, change the configuration in the yaml file)
+
+* Running the main application
+
+Start the application: KstreamAggregationSample1Application
+
+* Testing the output topic
+
+Open a console and execute the kafka-console-consumer script on the output topic:
+
+<KAFKA-INSTALLATION-DIRECTORY>/bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic foo-data-out
+
+* Running the driver with some init data (with status "active")
+
+Send some events with status flag set to "active":
+
+Run the driver application: SendToInputKStream.
+
+Watch the console at the main application.
+
+Make sure that you are not receiving any data in the console consumer as all the events were sent with status "active"
+
+* Running the driver with status changing from "active" to "pending"
+
+Change the driver where the status is "active" to "pending" (this code is in the runner method)
+
+Re-run the driver.
+
+Watch the console on the main application.
+
+This time also note that on the console consumer, you see all the events come through as the status changed from active to pending.
